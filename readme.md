@@ -1,5 +1,10 @@
 # Shoe Raffle Scripts
 
+### NeedSupply
+
+You won't get emails unless you win. Even entering manually gives you no emails.
+
+
 ## Ruvilla script no longer works. 
 
 After we crashed their servers from the amount of requests (sorry @ruvilla). 
