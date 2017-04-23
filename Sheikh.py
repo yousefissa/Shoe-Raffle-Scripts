@@ -14,16 +14,17 @@ session.headers.update(headers)
 
 # CHANGE the fields as the comments say  
 def send_form(limit):
-    fid, sid, site_key = sitekey()
+    fid, sid, sitekey = sitekey_search()
 
     api_key = '' # COPY YOUR 2CAPTCHA KEY HERE.
 
     for i in range(1, limit):
         cap_id = session.post("http://2captcha.com/in.php?key={}&method=userrecaptcha&googlekey={}&pageurl={}".format(api_key, sitekey, main_url)).text.split('|')[1]
+        print(cap_id)
         cap_answer = session.get("http://2captcha.com/res.php?key={}&action=get&id={}".format(api_key, cap_id)).text
-        while 'CAPCHA_NOT_READY' in recaptcha_answer:
+        while 'CAPCHA_NOT_READY' in cap_answer:
             print('Waiting for captcha. Sleeping!')
-            sleep(7)
+            sleep(10)
             cap_answer = session.get("http://2captcha.com/res.php?key={}&action=get&id={}".format(api_key, cap_id)).text
         return_cap = cap_answer.split('|')[1]
 
@@ -45,17 +46,17 @@ def send_form(limit):
             "90307[899049]": "true", # dont change
             "g-recaptcha-response": return_cap # dont change
         }
-        resp = requests.post(url, data=payload, headers=headers)
+        resp = requests.post(main_url, data=payload, headers=headers)
         print('{}/{} registered.'.format(i, limit))
 
 # finds sitekey, sid, and fid
 # fid and sid are found in main_url... just in case it changes, i guess?
-def sitekey():
-    response = session.get(url)
+def sitekey_search():
+    response = session.get(main_url)
     soup = BeautifulSoup(response.content, 'html.parser')
     fid, sid = soup.find("input", {"name": "fid"})['value'], soup.find("input", {'name':'sid'})['value']
-    site_key = soup.find("div", {"class":"g-recaptcha"})["data-sitekey"]
-    return fid, sid, site_key
+    sitekey = soup.find("div", {"class":"g-recaptcha"})["data-sitekey"]
+    return (fid, sid, sitekey)
 
 if __name__ == "__main__":
     send_form(10000)
