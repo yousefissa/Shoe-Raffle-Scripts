@@ -23,7 +23,7 @@ def send_form(limit):
         cap_answer = session.get("http://2captcha.com/res.php?key={}&action=get&id={}".format(api_key, cap_id)).text
         while 'CAPCHA_NOT_READY' in cap_answer:
             print('Waiting for captcha. Sleeping!')
-            sleep(10)
+            sleep(5)
             cap_answer = session.get("http://2captcha.com/res.php?key={}&action=get&id={}".format(api_key, cap_id)).text
         return_cap = cap_answer.split('|')[1]
 
