@@ -20,7 +20,6 @@ def send_form(limit):
 
     for i in range(1, limit):
         cap_id = session.post("http://2captcha.com/in.php?key={}&method=userrecaptcha&googlekey={}&pageurl={}".format(api_key, sitekey, main_url)).text.split('|')[1]
-        print(cap_id)
         cap_answer = session.get("http://2captcha.com/res.php?key={}&action=get&id={}".format(api_key, cap_id)).text
         while 'CAPCHA_NOT_READY' in cap_answer:
             print('Waiting for captcha. Sleeping!')
