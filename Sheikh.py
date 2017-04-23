@@ -35,7 +35,7 @@ def send_form(limit):
             "delid": "", # dont change
             "subid": "", # dont change
             "td": "", # dont change
-            "formtype": "addcontact",
+            "formtype": "addcontact", # dont change
             "90298[29288859]": "",  # PUT YOUR FIRST NAME HERE
             "90299[29288860]": "", # PUT YOUR LAST NAME HERE
             "90300": email, # dont change 
